@@ -1,0 +1,172 @@
+<%- include('../partials/Header') %>
+<%- include('./partials/header') %>
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="iq-card">
+                        <div class="iq-card-body p-0">
+                           <div class="iq-edit-list">
+                              <ul class="iq-edit-profile d-flex nav nav-pills">
+                                 <li class="col-md-4 p-0">
+                                    <a class="nav-link active" data-toggle="pill" href="#personal-information">
+                                    Personal Information
+                                    </a>
+                                 </li>
+                                 <li class="col-md-4 p-0">
+                                    <a class="nav-link action" data-toggle="pill" href="#chang-image">
+                                    Profile Picture
+                                    </a>
+                                 </li>
+                                 <li class="col-md-4 p-0">
+                                    <a class="nav-link" data-toggle="pill" href="#chang-pwd">
+                                    Change Password
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-12">
+                     <div class="iq-edit-list-data">
+                        <div class="tab-content">
+                           <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                              <div class="iq-card">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                       <h4 class="card-title">Personal Information</h4>
+                                    </div>
+                                 </div>
+                                 <div class="iq-card-body">
+                                    <form action="/editDocterPersonal?_method=PUT" method="POST" >
+                                       <div class=" row align-items-center">
+                                          <div class="form-group col-sm-6">
+                                             <label for="fname">First Name:</label>
+                                             <input type="text" name="fname" required placeholder="First Name" class="form-control" id="fname" value="<%=docter.fname%>">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="lname">Last Name:</label>
+                                             <input type="text" name="lname" required placeholder="Last Name" class="form-control" id="lname" value="<%=docter.lname%>">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="cname">City:</label>
+                                             <input type="text" name="city" required placeholder="City" class="form-control" id="cname" value="<%=docter.city%>">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="dob">Date Of Birth:</label>
+                                             <input  class="form-control" required placeholder="23/03/1990" name="dob" id="dob" value="<%=docter.dob%>">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label>Age:</label>
+                                             <input  class="form-control" required placeholder="Age" name="age" id="age" value="<%=docter.age%>">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label>Pincode:</label>
+                                             <input type="number" class="form-control" required placeholder="Pincode" name="pinCode" id="pinCode" pattern=".{6}" value="<%=docter.pinCode%>">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label>Country:</label>
+                                             <select  class="form-control" required name="country" id="exampleFormControlSelect3">
+                                                <option>Canada</option>
+                                                <option>AMERICA</option>
+                                                <option selected="">INDIA</option>
+                                                <option>USA</option>
+                                                <option>Africa</option>
+                                             </select>
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label>State:</label>
+                                             <select class="form-control" required name="state" id="exampleFormControlSelect4">
+                                                <option>Delhi</option>
+                                                <option>Jind</option>
+                                                <option selected="">MAHARASHTRA</option>
+                                                <option>London</option>
+                                                <option>Kolkata</option>
+                                             </select>
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label>Specialization</label>
+                                             <input type="text" class="form-control" required placeholder="Specialization" name="specialization" id="specialization" value="<%=docter.specialization%>">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label>Appointment Fee</label>
+                                             <input type="text" class="form-control" required placeholder="Appointment Fee(INR)" name="appointmentFee" id="appointmentFee" value="<%=docter.appointmentFee%>">
+                                          </div>
+                                          <div class="form-group col-sm-12">
+                                             <label>Address:</label>
+                                             <textarea required class="form-control" required name="address" rows="5" style="line-height: 22px;">
+                                                <%= docter.address %>
+                                             </textarea>
+                                          </div>
+                                       </div>
+                                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                       <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade" id="chang-pwd" role="tabpanel">
+                              <div class="iq-card">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                       <h4 class="card-title">Change Password</h4>
+                                    </div>
+                                 </div>
+                                 <div class="iq-card-body">
+                                    <form>
+                                       <div class="form-group">
+                                          <label for="cpass">Current Password:</label>
+                                          <a href="javascripe:void();" class="float-right">Forgot Password</a>
+                                          <input type="Password" class="form-control" id="cpass" value="">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="npass">New Password:</label>
+                                          <input type="Password" class="form-control" id="npass" value="">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="vpass">Verify Password:</label>
+                                          <input type="Password" class="form-control" id="vpass" value="">
+                                       </div>
+                                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                       <button type="reset" class="btn iq-bg-danger">cancel</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade" id="chang-image" role="tabpanel">
+                              <div class="iq-card">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                       <h4 class="card-title">Change Profile Picture</h4>
+                                    </div>
+                                 </div>
+                                 <div class="iq-card-body">
+                                    <form enctype="multipart/form-data" action="/editProfilePic?_method=PUT" method="POST" >
+                                       <div class="form-group row align-items-center">
+                                          <div class="col-md-12">
+                                             <div class="profile-img-edit">
+                                                <img class="profile-pic" src="<%=docter.image%>" alt="profile-pic">
+                                                <!-- <div class="p-image"> -->
+                                                   <!-- <i class="ri-pencil-line upload-button"></i> -->
+                                                   <input style="margin-top : 20px" id="cover" name="image" type="file" accept="image/*" required/>
+                                                <!-- </div> -->
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                       <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Footer -->
+            <%- include('../partials/Footer') %>
+   </body>
+
+<!-- Mirrored from iqonic.design/themes/xray/html/profile-edit.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2020 16:44:37 GMT -->
+</html>

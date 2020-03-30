@@ -1,0 +1,397 @@
+<%- include('../partials/Header') %>
+<%- include('./partials/header') %>
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-lg-4">
+                     <div class="iq-card">
+                        <div class="iq-card-body pl-0 pr-0 pt-0">
+                           <div class="doctor-details-block">
+                              <div class="doc-profile-bg bg-primary" style="height:150px;">
+                              </div>
+                              <div class="doctor-profile text-center">
+                                 <img src="<%=docter.image%>" alt="profile-img" class="avatar-130 img-fluid">
+                              </div>
+                              <div class="text-center mt-3 pl-3 pr-3">
+                                 <h4><b><%= docter.username %> </b></h4>
+                                 <p>Doctor</p>
+                                 <p class="mb-0"> Specialization in <%= docter.specialization %> </p>
+                              </div>
+                              <hr>
+                              <ul class="doctoe-sedual d-flex align-items-center justify-content-between p-0 m-0">
+                                 <li class="text-center">
+                                    <h3 class="counter"><%= docter.patientsOnTreatment %></h3>
+                                    <span>Children on vaccination </span>
+                                  </li>
+                                  <li class="text-center">
+                                    <h3><%= docter.appointmentFee %></h3>
+                                    <span>Appointment Fee</span>
+                                  </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Personal Information</h4>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <div class="about-info m-0 p-0">
+                              <div class="row">
+                                 <div class="col-4">First Name:</div>
+                                 <% if(docter.fname){ %>
+                                    <% var firstName = docter.fname; var lastName = docter.lname %>
+                                 <% }else{ %>
+                                    <% var indexOfSpace = docter.username.indexOf(" ") %>
+                                    <% if(indexOfSpace == -1 ){ %>
+                                       <% var firstName = docter.username %>
+                                       <% var lastName = "" %>
+                                    <% }else{ %>
+                                       <% var firstName = docter.username.slice(0,indexOfSpace) %>
+                                       <% var lastName = docter.username.slice(indexOfSpace+1,docter.username.length) %> 
+                                    <% } %>  
+                                 <% } %>
+                                 <div class="col-8"> <%= firstName %> </div>
+                                 <% if( indexOfSpace != -1 ){ %>
+                                    <div class="col-4">Last Name:</div>
+                                    <div class="col-8"> <%= lastName %> </div>
+                                 <% } %>
+                                 <div class="col-4">Age:</div>
+                                 <div class="col-8"> <%= docter.age %>  </div>
+                                 <div class="col-4">Mobile  Number:</div>
+                                 <div class="col-8"> <%= docter.mobileNumber %> </div>
+                                 <div class="col-4">Country :</div>
+                                 <div class="col-8"> <%= docter.country %> </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Photos</h4>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <ul class="profile-img-gallary d-flex flex-wrap p-0 m-0">
+                              <% docter.pictures.forEach( eachOne => { %>
+                                 <li class="col-md-4 col-6 pb-3">
+                                    <img src="<%=eachOne%>" alt="gallary-image" class="img-fluid">
+                                 </li>
+                              <% } ) %>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-8">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="iq-card">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Schedule</h4>
+                                 </div>
+                              </div>
+                              <div class="iq-card-body">
+                                 <ul class="list-inline m-0 p-0">
+                                    <li>
+                                       <h6 class="float-left mb-1">Ruby saul (Blood Check)</h6>
+                                       <small class="float-right mt-1">Today</small>
+                                       <div class="d-inline-block w-100">
+                                          <p class="badge badge-primary">09:00 AM </p>
+                                       </div>
+                                    </li>
+                                    <li>
+                                       <h6 class="float-left mb-1">  Anna Mull (Fever)</h6>
+                                       <small class="float-right mt-1">Today</small>
+                                       <div class="d-inline-block w-100">
+                                          <p class="badge badge-danger">09:15 AM </p>
+                                       </div>
+                                    </li>
+                                    <li>
+                                       <h6 class="float-left mb-1">Petey Cruiser (X-ray)</h6>
+                                       <small class="float-right mt-1">Today</small>
+                                       <div class="d-inline-block w-100">
+                                          <p class="badge badge-warning">10:00 AM </p>
+                                       </div>
+                                    </li>
+                                    <li>
+                                       <h6 class="float-left mb-1">Anna Sthesia (Full body Check up)</h6>
+                                       <small class="float-right mt-1">Today</small>
+                                       <div class="d-inline-block w-100">
+                                          <p class="badge badge-info">01:00 PM </p>
+                                       </div>
+                                    </li>
+                                    <li>
+                                       <h6 class="float-left mb-1">Paul Molive (Operation)</h6>
+                                       <small class="float-right mt-1">Tomorrow</small>
+                                       <div class="d-inline-block w-100">
+                                          <p class="badge badge-success">09:00 AM </p>
+                                       </div>
+                                    </li>
+                                    
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="iq-card">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Patients Notes</h4>
+                                 </div>
+                              </div>
+                              <div class="iq-card-body">
+                                  <ul class="list-inline m-0 p-0">
+                                    <li class="d-flex align-items-center justify-content-between mb-3">
+                                       <div>
+                                          <h6>Treatment was good!</h6>                                      
+                                          <p class="mb-0">Eye Test </p>
+                                       </div>
+                                       <div><a href="#" class="btn iq-bg-primary">Open</a></div>
+                                    </li>
+                                    <li class="d-flex align-items-center justify-content-between mb-3">
+                                       <div>
+                                          <h6>My Helth in better Now</h6>                                      
+                                          <p class="mb-0">Fever Test</p>
+                                       </div>
+                                       <div><a href="#" class="btn iq-bg-primary">Open</a></div>
+                                    </li>
+                                    <li class="d-flex align-items-center justify-content-between mb-3">
+                                       <div>
+                                          <h6>No Effacted</h6>                                      
+                                          <p class="mb-0">Thyroid Test</p>
+                                       </div>
+                                       <div><a href="#" class="btn iq-bg-danger">Close</a></div>
+                                    </li>
+                                    <li class="d-flex align-items-center justify-content-between mb-3">
+                                       <div>
+                                          <h6>Operation Successfull</h6>                                      
+                                          <p class="mb-0">Orthopaedic</p>
+                                       </div>
+                                       <div><a href="#" class="btn iq-bg-primary">Open</a></div>
+                                    </li>
+                                    <li class="d-flex align-items-center justify-content-between mb-3">
+                                       <div>
+                                          <h6>Mediacal Care is just a click away</h6>                                      
+                                          <p class="mb-0">Join Pain </p>
+                                       </div>
+                                       <div><a href="#" class="btn iq-bg-danger">Close</a></div>
+                                    </li> 
+                                    <li class="d-flex align-items-center justify-content-between">
+                                       <div>
+                                          <h6>Treatment is good</h6>                                      
+                                          <p class="mb-0">Skin Treatment </p>
+                                       </div>
+                                       <div><a href="#" class="btn iq-bg-primary">Open</a></div>
+                                    </li>                                  
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="iq-card">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Education</h4>
+                                 </div>
+                              </div>
+                              <% if(docter.education.length == 0){ %>
+                                 <div class="iq-card-body">
+                                    <h6> No education data added yet!!! </h6>
+                                    <button id="showEduForm" class="form-group btn btn-warning">Add Data</button>
+                                 </div>
+                              <% }else{ %>
+                                 <div class="iq-card-body"> 
+                                    <button id="showEduForm" class="form-group btn btn-warning">Add Data</button>
+                                    <table class="table mb-0 table-borderless">
+                                    <thead>
+                                       <tr>
+                                             <th scope="col">Year</th>
+                                             <th scope="col">Degree</th>
+                                             <th scope="col">Institute</th>
+                                             <th scope="col">Result</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <% var eduIndex = 0  %>
+                                       <% docter.education.forEach( (eachOne,eduIndex) => { %>
+                                          <tr>
+                                             <td> <%= eachOne.year %> </td>
+                                             <td> <%= eachOne.degree %> </td>
+                                             <td> <%= eachOne.institute %> </td>
+                                             <td><span class="badge badge-success"> <%= eachOne.result %> </span></td>
+                                             <td> 
+                                                <form action="/deleteEdu-<%=eduIndex%>?_method=PUT" method="POST">
+                                                   <button class="btn btn-danger" > Delete </button>
+                                                </form>
+                                           </td>
+                                          </tr>
+                                          <% eduIndex = eduIndex + 1 %>
+                                       <% } ) %>
+                                    </tbody>
+                                 </table>
+                                 </div>
+                              <% } %>
+                              <div class="iq-card" id="formEducation">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                       <h4 class="card-title">Add Education Info</h4>
+                                    </div>
+                                 </div>
+                                 <div class="iq-card-body">
+                                    <form action="/addEducationInfo?_method=PUT" method="POST" >
+                                       <div class=" row align-items-center">
+                                          <div class="form-group col-sm-12">
+                                             <label for="degree">Degree</label>
+                                             <input type="text" name="degree" required placeholder="Degree" class="form-control" id="degree">
+                                          </div>
+                                          <div class="form-group col-sm-12">
+                                             <label for="institute">Institute</label>
+                                             <input type="text" class="form-control" required placeholder="Institute Name" name="institute" id="institute">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="yearOfQ">Year of qualification</label>
+                                             <input type="number" name="yearOfQ" required placeholder="Year of qualification" class="form-control" id="yearOfQ">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="result">Result:</label>
+                                             <input type="text" name="result" required placeholder="Result" class="form-control" id="result">
+                                          </div>
+                                       </div>
+                                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                       <button id="cancelEduForm" type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="iq-card">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Experience</h4>
+                                 </div>
+                              </div>
+                              <% if(docter.experience.length == 0){ %>
+                                 <div class="iq-card-body">
+                                    <h6> No experience data added yet!!! </h6>
+                                    <button id="showExpForm" class="form-group btn btn-warning">Add Data</button>
+                                 </div>
+                              <% }else{ %>
+                                 <div class="iq-card-body">
+                                    <button id="showExpForm" class="form-group btn btn-warning">Add Data</button>
+                                    <table class="table mb-0 table-borderless">
+                                    <thead>
+                                       <tr>
+                                             <th scope="col">Year</th>
+                                             <th scope="col">Department</th>
+                                             <th scope="col">Position</th>
+                                             <th scope="col">Hospital</th>
+                                             <th scope="col">Feedback</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <% var Index = 0 %>
+                                       <% docter.experience.forEach( eachOne => { %>
+                                          <tr>
+                                             <td> <%= eachOne.year %> </td>
+                                             <td> <%= eachOne.department %> </td>
+                                             <td> <%= eachOne.position %>  </td>
+                                             <td> <%= eachOne.hospital %>  </td>
+                                             <td><span class="badge badge-primary"> <%= eachOne.feedback %> </span></td>
+                                             <td> 
+                                                <form action="/deleteExp-<%=Index%>?_method=PUT" method="POST">
+                                                   <button class="btn btn-danger" > Delete </button>
+                                                </form>
+                                             <% Index = Index + 1 %>
+                                          </tr>
+                                       <% } ) %>
+                                    </tbody>
+                                 </table>
+                                 </div>
+                              <% } %>
+                              <div class="iq-card" id="formExperience">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                       <h4 class="card-title">Add Experience Info</h4>
+                                    </div>
+                                 </div>
+                                 <div class="iq-card-body">
+                                    <form action="/addExpInfo?_method=PUT" method="POST" >
+                                       <div class=" row align-items-center">
+                                          <div class="form-group col-sm-4">
+                                             <label for="yearOfQ">Year</label>
+                                             <input type="text" name="yearOfQ" required placeholder="e.g. 2010-2014" class="form-control" id="yearOfQ">
+                                          </div>
+                                          <div class="form-group col-sm-8">
+                                             <label for="dept">Department</label>
+                                             <input type="text" name="dept" required placeholder="Department" class="form-control" id="dept">
+                                          </div>
+                                          <div class="form-group col-sm-4">
+                                             <label for="feedback">Feedback</label>
+                                             <input type="text" class="form-control" required placeholder="Feedback in max of 2 words" name="feedback" id="feedback">
+                                          </div>
+                                          <div class="form-group col-sm-8">
+                                             <label for="hospital">Hospital:</label>
+                                             <input type="text" name="hospital" required placeholder="Hospital" class="form-control" id="hospital">
+                                          </div>
+                                          <div class="form-group col-sm-4">
+                                             <label>Position:</label>
+                                             <select class="form-control" required name="position" id="exampleFormControlSelect4">
+                                                <option selected="">Senior Docter</option>
+                                                <option>Patient Services Assistant</option>
+                                                <option>Surgeon</option>
+                                                <option>Nurse</option>
+                                                <option>Clinal Assistant</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                       <button id="cancelExpForm" type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Footer -->
+             <%- include('../partials/Footer') %>
+   </body>
+</html>
+<script>
+   var status = "hide" ;
+   $("#formEducation").hide(true)
+   $("#showEduForm").click(function(){
+     if(status === "hide"){
+       $("#formEducation").show(true)
+       status = "show"
+     }else{
+       $("#formEducation").hide(true)
+       status = "hide"
+     }
+   })
+   $("#cancelEduForm").click(function(){
+      $("#formEducation").hide(true)
+      status = "hide"
+   })
+   var status2 = "hide" ;
+   $("#formExperience").hide(true)
+   $("#showExpForm").click(function(){
+     if(status2 === "hide"){
+       $("#formExperience").show(true)
+       status2 = "show"
+     }else{
+       $("#formExperience").hide(true)
+       status2 = "hide"
+     }
+   })
+   $("#cancelExpForm").click(function(){
+      $("#formExperience").hide(true)
+      status2 = "hide"
+   })
+ </script>
