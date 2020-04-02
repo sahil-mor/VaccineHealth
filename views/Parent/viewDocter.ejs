@@ -1,0 +1,147 @@
+<%- include('../partials/Header') %>
+<%- include('./partials/header') %>
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-lg-4">
+                     <div class="iq-card">
+                        <div class="iq-card-body pl-0 pr-0 pt-0">
+                           <div class="doctor-details-block">
+                              <div class="doc-profile-bg bg-primary" style="height:150px;">
+                              </div>
+                              <div class="doctor-profile text-center">
+                                 <img src="<%=docter.image%>" alt="profile-img" class="avatar-130 img-fluid">
+                              </div>
+                              <div class="text-center mt-3 pl-3 pr-3">
+                                 <h4><b><%= docter.username %> </b></h4>
+                                 <p>Doctor</p>
+                                 <p class="mb-0"> Specialization in <%= docter.specialization %> </p>
+                              </div>
+                              <hr>
+                              <ul class="doctoe-sedual d-flex align-items-center justify-content-between p-0 m-0">
+                                 <li class="text-center">
+                                    <h3 class="counter"><%= docter.age %></h3>
+                                    <span>Age </span>
+                                  </li>
+                                  <li class="text-center">
+                                    <h3><%= docter.appointmentFee %></h3>
+                                    <span>Appointment Fee</span>
+                                  </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Personal Information</h4>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <div class="about-info m-0 p-0">
+                              <div class="row">
+                                 <div class="col-4">First Name:</div>
+                                 <% if(docter.fname){ %>
+                                    <% var firstName = docter.fname; var lastName = docter.lname %>
+                                 <% }else{ %>
+                                    <% var indexOfSpace = docter.username.indexOf(" ") %>
+                                    <% if(indexOfSpace == -1 ){ %>
+                                       <% var firstName = docter.username %>
+                                       <% var lastName = "" %>
+                                    <% }else{ %>
+                                       <% var firstName = docter.username.slice(0,indexOfSpace) %>
+                                       <% var lastName = docter.username.slice(indexOfSpace+1,docter.username.length) %> 
+                                    <% } %>  
+                                 <% } %>
+                                 <div class="col-8"> <%= firstName %> </div>
+                                 <% if( indexOfSpace != -1 ){ %>
+                                    <div class="col-4">Last Name:</div>
+                                    <div class="col-8"> <%= lastName %> </div>
+                                 <% } %>
+                                 <div class="col-4">Mobile  Number:</div>
+                                 <div class="col-8"> <%= docter.mobileNumber %> </div>
+                                 <div class="col-4">Country :</div>
+                                 <div class="col-8"> <%= docter.country %> </div>
+                                 <% if(!docter.patients.includes(child._id)){ %>
+                                    <div class="col-12"> 
+                                       <a  href="makePaymentTo-<%=docter._id%>-For-<%=child._id%>" style="width: 40%; margin-left: 25% ;margin-top: 20px;" 
+                                          class="btn btn-outline-primary"> Take Appointment 
+                                       </a>
+                                    </div>
+                                 <% } %>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-8">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="iq-card">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Education</h4>
+                                 </div>
+                              </div>
+                            <div class="iq-card-body"> 
+                            <table class="table mb-0 table-borderless">
+                            <thead>
+                                <tr>
+                                        <th scope="col">Year</th>
+                                        <th scope="col">Degree</th>
+                                        <th scope="col">Institute</th>
+                                        <th scope="col">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% docter.education.forEach( (eachOne,eduIndex) => { %>
+                                    <tr>
+                                        <td> <%= eachOne.year %> </td>
+                                        <td> <%= eachOne.degree %> </td>
+                                        <td> <%= eachOne.institute %> </td>
+                                        <td><span class="badge badge-success"> <%= eachOne.result %> </span></td>
+                                    </tr>
+                                <% } ) %>
+                            </tbody>
+                            </table>
+                            </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="iq-card">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Experience</h4>
+                                 </div>
+                              </div>
+                                 <div class="iq-card-body">
+                                    <table class="table mb-0 table-borderless">
+                                    <thead>
+                                       <tr>
+                                             <th scope="col">Year</th>
+                                             <th scope="col">Department</th>
+                                             <th scope="col">Position</th>
+                                             <th scope="col">Hospital</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <% docter.experience.forEach( eachOne => { %>
+                                          <tr>
+                                             <td> <%= eachOne.year %> </td>
+                                             <td> <%= eachOne.department %> </td>
+                                             <td> <%= eachOne.position %>  </td>
+                                             <td> <%= eachOne.hospital %>  </td>
+                                          </tr>
+                                       <% } ) %>
+                                    </tbody>
+                                 </table>
+                                 </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Footer -->
+             <%- include('../partials/Footer') %>
+   </body>
+</html>

@@ -18,7 +18,8 @@ var parentSchema = new mongoose.Schema({
     country : String,
     pinCode : String,
     joined : Date,
-    age : String
+    age : String,
+    // upcomingVaccines : []
 })
 
 parentSchema.plugin(passportLocalMongoose)

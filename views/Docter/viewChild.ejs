@@ -1,0 +1,213 @@
+<%- include('../partials/Header') %>
+<%- include('./partials/header') %>
+      <!-- Page Content  -->
+      <div id="content-page" class="content-page">
+         <div class="container-fluid">
+            <div class="row"  style="margin-top: -100px;">
+               <div class="col-lg-4 row m-0 p-0">
+                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height iq-user-profile-block" style="height: 75%;">
+                     <div class="iq-card-body">
+                        <div class="user-details-block">
+                           <div class="user-profile text-center">
+                              <img src="<%=child.image%>" alt="profile-img" class="avatar-130 img-fluid">
+                           </div>
+                           <div class="text-center mt-3">
+                              <h4><b> <%= child.fname %> <%= child.lname %> </b></h4> <br>
+                              <p> Age : <%= child.age %>  year </p>
+                              <p> Gender : <%= child.gender %> </p>
+                              <p> DOB : <%= child.dob %> </p>
+                              <p> Adderss : <%= child.parent.address %>  </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+               <div class="col-lg-4">
+                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                     <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                           <h4 class="card-title">Upcoming Checkups</h4>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                        
+                        </div>
+                     </div>
+                     <div class="iq-card-body" >
+                        <ul class="iq-timeline">
+                           <% if(child.vaccineNumberWorkingOn < 3){ %>
+                              <%   var vaccines = child.vaccine.details.slice(0,3)  %>
+                           <% }else if( child.vaccineNumberWorkingOn < 9  ){ %>
+                              <% var vaccines = child.vaccine.details.slice(child.vaccineNumberWorkingOn-2,child.vaccineNumberWorkingOn+1) %>
+                           <% }else{ %>
+                            warning     <% var vaccines = child.vaccine.details.slice(7,10) %>
+                           <% } %> 
+                           <% vaccines.forEach( eachVaccine => { %>
+                              <li>
+                                 <div class="timeline-dots"></div>
+                                 <h6 class="float-left mb-1"> <%= eachVaccine.vaccineName %> </h6>
+                                 <% if(eachVaccine.schedule.includes("Done")){ %>
+                                    <small class="float-right mt-1 btn-success btn"> <%= eachVaccine.schedule %>  </small>
+                                 <% }else{ %>
+                                    <small class="float-right mt-1 btn-danger btn"> <%= eachVaccine.schedule %>  </small>
+                                 <% } %>
+                                 <div class="d-inline-block w-100">
+                                    <p> <%= eachVaccine.route %>  </p>
+                                 </div>
+                              </li>
+                           <% } ) %> 
+                           <li>
+                               <small  style="margin-left: 25%;">Attended</small>
+                               <a href="appointmentAttended-<%=child._id%>" class="btn btn-success"> <i class="fa fa-check" aria-hidden="true"></i>  </a>
+                               <small  style="margin-left: 10%;">Missed</small>
+                               <a href="appointmentMissed-<%=child._id%>",isDocterLoggedIn,appointmentMissed" class="btn btn-danger"> <i class="fa fa-times" aria-hidden="true"></i> </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-4 row m-0 p-0">
+
+                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height iq-user-profile-block" style="height: 75%;">
+                     <div class="iq-card-body">
+                        <div class="user-details-block">
+                            <div class="user-profile text-center">
+                                <img src="<%=child.parent.image%>" alt="profile-img" class="avatar-130 img-fluid">
+                            </div>
+                            <div class="text-center mt-3">
+                                <h4><b> 
+                                    <%= child.parent.username %> 
+                                </b></h4> <br>
+                                <p> Age : <%= child.parent.age %>  year </p>
+                                <p> Mobile : <%= child.parent.mobileNumber %> </p>
+                                <p> City : <%= child.parent.city %>  </p>
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Vaccinations Information</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                <div class="tab-pane fade active show" id="appointmentForm"  role="tabpanel">
+                    <div class="iq-card">
+                        <% var requiredVaccine = child.vaccine.details[child.vaccineNumberWorkingOn]  %>
+                       <div class="iq-card-header d-flex justify-content-between">
+                          <div class="iq-header-title">
+                             <h4 class="card-title">Set Appointment For <%= requiredVaccine.vaccineName %> </h4>
+                          </div>
+                       </div>
+                       <div class="iq-card-body">
+                          <form action="scheduleVaccine-<%=child._id%>?_method=PUT" method="POST" >
+                             <div class="row align-items-center">
+                                <div class="form-group col-sm-4">
+                                   <label for="vName">Vaccine Name:</label>
+                                   <input type="text" disabled required placeholder="Vaccine Name" class="form-control" id="vName" value="<%=requiredVaccine.vaccineName%>">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="route">Route</label>
+                                    <input type="text" disabled required placeholder="Route" class="form-control" id="route" value="<%=requiredVaccine.route%>">
+                                 </div>
+                                 <div class="form-group col-sm-4">
+                                    <label for="dose">Dose</label>
+                                    <input type="text" disabled required placeholder="Dose" class="form-control" id="dose" value="<%=requiredVaccine.dose%>">
+                                 </div>
+                                 <div class="form-group col-sm-8">
+                                    <label for="whenToGive">When To Give</label>
+                                    <input type="text" disabled required placeholder="Dose" class="form-control" id="whenToGive" value="<%=requiredVaccine.whenToGive%>">
+                                 </div>
+                                 <div class="form-group col-sm-4">
+                                    <label for="date">Date</label>
+                                    <input type="date" required placeholder="Date" name="date" class="form-control" id="date">
+                                 </div>
+                             </div>
+                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                             <button type="reset" id="cancelForm" class="btn iq-bg-danger">Cancel</button>
+                          </form>
+                       </div>
+                    </div>
+                 </div>
+                  <div class="table-responsive mt-4">
+                     <table class="table mb-0 table-borderless">
+                        <thead>
+                           <tr>
+                              <th>Name</th>
+                              <th>When To Give</th>
+                              <th>Dose</th>
+                              <th>Route</th>
+                              <th>Site</th>
+                              <th>Schedule</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                            <% var i = 0 %>
+                           <% child.vaccine.details.forEach( eachVaccine => { %>
+                              <tr>
+                                 <td> <%= eachVaccine.vaccineName %> </td>
+                                 <td> <%= eachVaccine.whenToGive %> </td>
+                                 <td> <%= eachVaccine.dose %> </td>
+                                 <td> <%= eachVaccine.route %> </td>
+                                 <td> <%= eachVaccine.site %> </td>
+                                 <% if(i == 0){ %>
+                                    <% if(i == child.vaccineNumberWorkingOn && eachVaccine.schedule == "Not Scheduled Yet" ){ %>
+                                        <td id="showAppointmentForm" class="btn btn-success"> Set Appointment</td>
+                                    <% }else{ %>
+                                        <td class="btn btn-primary"> <%= eachVaccine.schedule %>  </td>
+                                    <% } %>
+                                 <% }else{ %>
+                                    <% if(i == child.vaccineNumberWorkingOn && child.vaccine.details[child.vaccineNumberWorkingOn-1].schedule.includes("Done") 
+                                            && eachVaccine.schedule == "Not Scheduled Yet"
+                                    ){ %>
+                                        <td id="showAppointmentForm" class="btn btn-success"> Set Appointment</td>
+                                    <% }else if(eachVaccine.schedule == "Not Scheduled Yet"){ %>
+                                        <td class="btn btn-danger"> <%= eachVaccine.schedule %> </td>
+                                    <% } else if(eachVaccine.schedule == "Reschedule Appointment"){ %>
+                                        <td id="showAppointmentForm" class="btn btn-secondary"> <%= eachVaccine.schedule %> </td>
+                                    <% } else { %>
+                                        <td class="btn btn-primary"> <%= eachVaccine.schedule %> </td>
+                                    <% } %>
+                                 <%  } %>
+                              </tr>
+                              <% i = i + 1 %>
+                           <% } ) %>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+        </div>
+
+      <!-- Footer -->
+      <%- include('../partials/Footer') %>
+   </body>
+
+<!-- Mirrored from iqonic.design/themes/xray/html/dashboard-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2020 16:44:12 GMT -->
+</html>
+
+<script>
+   var status = "hide" ;
+   $("#appointmentForm").hide(true)
+   $("#showAppointmentForm").click(function(){
+     if(status === "hide"){
+       $("#appointmentForm").show(true)
+       status = "show"
+     }else{
+       $("#appointmentForm").hide(true)
+       status = "hide"
+     }
+   })
+   $("#cancelForm").click(function(){
+      $("#appointmentForm").hide(true)
+      status = "hide"
+   })
+ </script>

@@ -1,0 +1,69 @@
+<%- include('../partials/Header') %>
+<%- include('./partials/header') %>
+            <!-- TOP Nav Bar END -->
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Doctors List</h4>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <% allDocters.forEach( docter => { %>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="iq-card">
+                           <div class="iq-card-body text-center">
+                              <div class="doc-profile">
+                                 <img class="rounded-circle img-fluid avatar-80" src="<%=docter.image%>" alt="profile">
+                              </div>
+                              <div class="iq-doc-info mt-3">
+                                <% if(docter.fname != ""){ %>
+                                    <h4>  <%= docter.fname %> <%= docter.lname %>  </h4>
+                                <% }else{ %>
+                                    <h4>  <%= docter.username %> </h4>
+                                <% } %>
+                                 <ul style="margin-top: 10px;" class="doctoe-sedual d-flex align-items-center justify-content-between p-0">
+                                    
+                                     <li class="text-center">
+                                        <h5> <%= docter.specialization %> </h5>
+                                        <span> Specialization </span>
+                                      </li>
+                                      <li class="text-center">
+                                        <h5> <%= docter.city %> </h5>
+                                        <span> City </span>
+                                      </li>
+                                 </ul>
+                                 <ul style="margin-top: 10px;" class="doctoe-sedual d-flex align-items-center justify-content-between p-0">
+                                    <li class="text-center">
+                                        <h5> <%= docter.age %> </h5>
+                                        <span> Age </span>
+                                    </li>
+                                    <li class="text-center">
+                                        <h5> <%= docter.appointmentFee %> </h5>
+                                        <span> Appointment Fee </span>
+                                    </li>
+                                </ul>
+                              </div>
+                              <div class="iq-doc-social-info mt-3 mb-3">
+                                 <ul class="m-0 p-0 list-inline">
+                                    <li><a href="<%=docter.FacebookUrl%>" target="_blank"><i class="ri-facebook-fill"></i></a></li>
+                                    <li><a href="<%=docter.TwitterUrl%>" target="_blank"><i class="ri-twitter-fill"></i></a> </li>
+                                    <li><a href="<%=docter.InstagramUrl%>" target="_blank"><i class="ri-google-fill"></i></a></li>
+                                 </ul>
+                              </div>
+                              <a href="viewDocter-<%=docter._id%>-By-<%=child._id%>" class="btn btn-primary">View Profile</a>
+                           </div>
+                        </div>
+                     </div>
+                  <% } ) %> 
+               </div>
+            </div>
+            <!-- Footer -->
+            <%- include('../partials/Footer') %>
+   </body>
+
+<!-- Mirrored from iqonic.design/themes/xray/html/doctor-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2020 16:44:29 GMT -->
+</html>

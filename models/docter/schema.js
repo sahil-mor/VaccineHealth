@@ -27,7 +27,6 @@ var docterSchema = new mongoose.Schema({
         ref : "Vaccine"
     }],
     appointmentFee : String,
-    patientsOnTreatment : Number,
     age : String,
     pictures : [ String ],
     fname : String,

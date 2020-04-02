@@ -14,7 +14,7 @@ var addEducationInfo = require("../models/docter/addEduInfo")
 var delteEduInfo = require("../models/docter/deleteEduInfo")
 var addExpInfo = require("../models/docter/addExpInfo")
 var deleteExpInfo = require("../models/docter/deleteExpInfo")
-
+var viewChild = require("../models/docter/viewChild")
 
 router.get("/signupDocter", ( req,res ) => {
     res.render("Docter/signup", { page : "Signup"  } )
@@ -35,9 +35,12 @@ router.post("/signinDocter", passport.authenticate("docter",{
 )
 
 router.get("/indexDocter",isDocterLoggedIn, (req, res) => {
-    Docter.findById(req.user._id, (err,foundDocter) => {
+    Docter.findById(req.user._id)
+    .populate("patients")
+    .exec((err,foundDocter) => {
         if(err){
             console.log(err)
+            req.flash("error","Unexpected Error Occured!!!")
             res.redirect("/signinDocter")
         }else{
             res.render("Docter/index", { docter : foundDocter } )
@@ -54,6 +57,7 @@ router.put("/addEducationInfo",isDocterLoggedIn,addEducationInfo)
 router.put("/deleteEdu-:index",isDocterLoggedIn,delteEduInfo)
 router.put("/addExpInfo",isDocterLoggedIn,addExpInfo)
 router.put("/deleteExp-:index",isDocterLoggedIn,deleteExpInfo)
+router.get("/viewChild-:childId",isDocterLoggedIn,viewChild)
 
 function isDocterLoggedIn(req,res,next){
     if(req.isAuthenticated()){

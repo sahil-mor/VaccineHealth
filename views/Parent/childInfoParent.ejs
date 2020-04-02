@@ -1,0 +1,186 @@
+<%- include('../partials/Header') %>
+<%- include('./partials/header') %>
+      <!-- Page Content  -->
+      <div id="content-page" class="content-page">
+         <div class="container-fluid">
+            <div class="row"  style="margin-top: -100px;">
+               <div class="col-lg-4 row m-0 p-0">
+                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height iq-user-profile-block" style="height: 75%;">
+                     <div class="iq-card-body">
+                        <div class="user-details-block">
+                           <div class="user-profile text-center">
+                              <img src="<%=child.image%>" alt="profile-img" class="avatar-130 img-fluid">
+                           </div>
+                           <div class="text-center mt-3">
+                              <h4><b> <%= child.fname %> <%= child.lname %> </b></h4> <br>
+                              <p> Age : <%= child.age %>  year </p>
+                              <p> Gender : <%= child.gender %> </p>
+                              <p> DOB : <%= child.dob %> </p>
+                              <p> Adderss : <%= parent.address %>  </p>
+                              <p> <button id="ImageForm" class="btn btn-warning"> Add Image </button> </p>
+                              <form id="childImage" enctype="multipart/form-data" action="/addImage-<%=child._id%>?_method=PUT" method="POST" >
+                                 <div class="form-group row align-items-center">
+                                    <div class="col-md-12">
+                                       <div class="profile-img-edit">
+                                          <input style="margin-top : 20px" id="cover" name="image" type="file" accept="image/*" required/>
+                                          <div style="margin-top: 10px;">
+                                             <button type="submit" style="float: left;" class="btn btn-primary mr-2">Submit</button>
+                                             <button type="reset" id="cancelForm" class="btn iq-bg-danger">Cancel</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+               <div class="col-lg-4">
+                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                     <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                           <h4 class="card-title">Upcoming Checkups</h4>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                        
+                        </div>
+                     </div>
+                     <div class="iq-card-body" >
+                        <ul class="iq-timeline">
+                           <% if(child.vaccineNumberWorkingOn < 4){ %>
+                              <%   var vaccines = child.vaccine.details.slice(0,4)  %>
+                           <% }else if( child.vaccineNumberWorkingOn < 9  ){ %>
+                              <% var vaccines = child.vaccine.details.slice(child.vaccineNumberWorkingOn-2,child.vaccineNumberWorkingOn+2) %>
+                           <% }else{ %>
+                              <% var vaccines = child.vaccine.details.slice(6,10) %>
+                           <% } %> 
+                           <% vaccines.forEach( eachVaccine => { %>
+                              <li>
+                                 <div class="timeline-dots"></div>
+                                 <h6 class="float-left mb-1"> <%= eachVaccine.vaccineName %> </h6>   
+                                 <% if(eachVaccine.schedule.includes("Done")){ %>
+                                    <small class="float-right mt-1 btn-success btn"> <%= eachVaccine.schedule %>  </small>
+                                 <% }else{ %>
+                                    <small class="float-right mt-1 btn-danger btn"> <%= eachVaccine.schedule %>  </small>
+                                 <% } %>
+                                 <div class="d-inline-block w-100">
+                                    <p> <%= eachVaccine.route %>  </p>
+                                 </div>
+                              </li>
+                           <% } ) %> 
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-4 row m-0 p-0">
+
+                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height iq-user-profile-block" style="height: 75%;">
+                     <div class="iq-card-body">
+                        <% if(child.docter){ %>
+                           <div class="user-details-block">
+                              <div class="user-profile text-center">
+                                 <img src="<%=child.docter.image%>" alt="profile-img" class="avatar-130 img-fluid">
+                              </div>
+                              <div class="text-center mt-3">
+                                 <h4><b> 
+                                    <% if(child.docter.fname != ""){ %>
+                                       <%= child.docter.fname %> <%= child.docter.lname %>
+                                    <% }else{ %>
+                                       <%= child.docter.username %> 
+                                    <% } %>
+                                 </b></h4> <br>
+                                 <p> Age : <%= child.docter.age %>  year </p>
+                                 <p> Specialization : <%= child.docter.specialization %> </p>
+                                 <p> Mobile : <%= child.docter.mobileNumber %> </p>
+                                 <p> City : <%= child.docter.city %>  </p>
+                                 <p> <a href="viewDocter-<%=child.docter._id%>-By-<%=child._id%>" class="btn btn-dark">View Docter</a> </p>
+                              </div>
+                           </div>
+                        <% }else{ %>
+                               <div class="col-sm-12">
+                              <div class="iq-card">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <h4 class="card-title">Docter</h4>
+                                    <a class="btn btn-dark" href="viewDoctersBy-<%=child._id%>" style="color: white;">View Docters</a>
+                                 </div>
+                              </div>
+                           </div>
+                        <% }  %>
+                     </div>
+                  </div>
+               </div>
+            </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Vaccinations Information</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div class="table-responsive mt-4">
+                     <table class="table mb-0 table-borderless">
+                        <thead>
+                           <tr>
+                              <th>Name</th>
+                              <th>When To Give</th>
+                              <th>Dose</th>
+                              <th>Route</th>
+                              <th>Site</th>
+                              <th>Schedule</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <% child.vaccine.details.forEach( eachVaccine => { %>
+                              <tr>
+                                 <td> <%= eachVaccine.vaccineName %> </td>
+                                 <td> <%= eachVaccine.whenToGive %> </td>
+                                 <td> <%= eachVaccine.dose %> </td>
+                                 <td> <%= eachVaccine.route %> </td>
+                                 <td> <%= eachVaccine.site %> </td>
+                                 <% if(eachVaccine.schedule == "Not Scheduled Yet"){ %>
+                                    <td class="btn btn-danger"> <%= eachVaccine.schedule %> </td>
+                                 <% } else if(eachVaccine.schedule.includes("Done")){ %>
+                                    <td class="btn btn-success"> <%= eachVaccine.schedule %> </td>
+                                 <% } else{ %>
+                                    <td class="btn btn-warning"> <%= eachVaccine.schedule %> </td>
+                                 <% } %>
+                              </tr>
+                           <% } ) %>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+        </div>
+
+      <!-- Footer -->
+      <%- include('../partials/Footer') %>
+   </body>
+
+<!-- Mirrored from iqonic.design/themes/xray/html/dashboard-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2020 16:44:12 GMT -->
+</html>
+
+<script>
+   var status = "hide" ;
+   $("#childImage").hide(true)
+   $("#ImageForm").click(function(){
+     if(status === "hide"){
+       $("#childImage").show(true)
+       status = "show"
+     }else{
+       $("#childImage").hide(true)
+       status = "hide"
+     }
+   })
+   $("#cancelForm").click(function(){
+      $("#childImage").hide(true)
+      status = "hide"
+   })
+ </script>

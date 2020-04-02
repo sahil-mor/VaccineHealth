@@ -1,0 +1,226 @@
+<%- include('../partials/Header') %>
+<%- include('./partials/header') %>
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-lg-4">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height iq-user-profile-block">
+                        <div class="iq-card-body">
+                           <div class="user-details-block">
+                              <div class="user-profile text-center">
+                                 <img src="<%=parent.image%>" alt="profile-img" class="avatar-130 img-fluid">
+                              </div>
+                              <div class="text-center mt-3">
+                                 <h4><b> <%= parent.username %> </b></h4>
+                                 <p>  Joined <%= parent.joined %>   </p>
+                              </div>
+                              <hr>
+                              <ul class="doctoe-sedual d-flex align-items-center justify-content-between p-0">
+                                 <li class="text-center">
+                                    <h3 class="counter"> <%= parent.children.length %> </h3>
+                                    <span> Children </span>
+                                  </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>   
+                  <div class="col-lg-8">
+                    <div class="container-fluid">
+                        <div class="row">
+                           <div class="col-sm-12">
+                              <div class="iq-card">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <h4 class="card-title">Children</h4>
+                                    <a class="btn btn-warning" id="addChild" style="color: white;">Add Child</a>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="tab-pane fade active show" id="child-information" role="tabpanel">
+                            <div class="iq-card">
+                               <div class="iq-card-header d-flex justify-content-between">
+                                  <div class="iq-header-title">
+                                     <h4 class="card-title">Child Information</h4>
+                                  </div>
+                               </div>
+                               <div class="iq-card-body">
+                                  <form action="/addChild?_method=PUT" method="POST" >
+                                     <div class=" row align-items-center">
+                                        <div class="form-group col-sm-6">
+                                           <label for="fname">First Name:</label>
+                                           <input type="text" name="fname" required placeholder="First Name" class="form-control" id="fname">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                           <label for="lname">Last Name:</label>
+                                           <input type="text" name="lname" required placeholder="Last Name" class="form-control" id="lname">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                           <label for="dob">Date Of Birth:</label>
+                                           <input  class="form-control" required placeholder="23/03/2018" name="dob" id="dob">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                           <label>Age:</label>
+                                           <input  class="form-control" required placeholder="Age" name="age" id="age">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                           <label>Gender:</label>
+                                           <select  class="form-control" required name="gender" id="exampleFormControlSelect3">
+                                              <option selected="">Boy</option>
+                                              <option>Girl</option>
+                                              <option >Transgender</option>
+                                           </select>
+                                        </div>
+                                     </div>
+                                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                     <button type="reset" id="cancelChild" class="btn iq-bg-danger">Cancel</button>
+                                  </form>
+                               </div>
+                            </div>
+                            </div>
+                           <% parent.children.forEach( child => { %>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="iq-card">
+                                        <div class="iq-card-body text-center">
+                                            <div class="doc-profile">
+                                                <img class="rounded-circle img-fluid avatar-80" src="<%=child.image%>" alt="profile">
+                                            </div>
+                                            <div class="iq-doc-info mt-3">
+                                                <h4> <%= child.fname %> <%= child.lname %> </h4>
+                                                <p class="mb-0" >
+                                                    <h6> Age : <%= child.age %> </h6>  
+                                                    <h6> <%= child.gender %> </h6>
+                                                    <% if( child.docter == undefined) { %>
+                                                        <a class="btn btn-warning" href="viewDoctersBy-<%=child._id%>" style="color : white;margin-top: 10px;"> View Docters </a>
+                                                    <%}else{ %>
+                                                        <% if( child.nextDate == "NOT SCHEDULED YET"){ %>
+                                                            <button class="btn btn-danger">NOT SCHEDULED YET</button>
+                                                        <% }else{ %>
+                                                            <button class="btn btn-warning"> <%= child.nextDate %> </button>
+                                                        <% } %>
+                                                    <% } %>
+                                                </p>
+                                            </div>
+                                            <a href="childInfo-<%=child._id%>" class="btn btn-primary">View Child</a>
+                                        </div>
+                                    </div>
+                                </div>
+                           <% } ) %>
+                        </div>
+                     </div>
+                  </div>              
+               </div>
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Ongoing Vaccines </h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle text-primary" id="dropdownMenuButton5" data-toggle="dropdown">
+                                 <i class="ri-more-fill"></i>
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton5">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <div class="table-responsive">
+                              <table class="table mb-0 table-borderless">
+                                 <thead>
+                                    <tr>
+                                       <th scope="col">Customer</th>
+                                       <th scope="col">Service</th>
+                                       <th scope="col">Date</th>
+                                       <th scope="col">Place</th>
+                                       <th scope="col">Contact</th>
+
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr>
+                                       <td>Sneh Garg</td>
+                                       <td>Installation</td>
+                                       <td>22/03/2020</td>
+                                       <td>Chandigarh</td>
+                                       <td>+91 7863986377</td>
+                                    </tr>
+                                    <tr>
+                                       <td>Annaya Sethi</td>
+                                       <td>Installation</td>
+                                       <td>25/03/2020</td>
+                                       <td>Delhi</td>
+                                       <td>+91 8652890123</td>
+                                    </tr>
+                                    <tr>
+                                       <td>Ram Singh</td>
+                                       <td>Servicing</td>
+                                       <td>25/03/2020</td>
+                                       <td>Delhi</td>
+                                       <td>+91 8634517845</td>
+                                    </tr>
+                                    <tr>
+                                       <td>Mukul Sharma</td>
+                                       <td>Check-Up</td>
+                                       <td>27/03/2020</td>
+                                       <td>Rishikesh</td>
+                                       <td>+91 6763748243</td>
+                                    </tr>
+                                    <tr>
+                                       <td>Karan Yadav</td>
+                                       <td>Installation</td>
+                                       <td>28/03/2020</td>
+                                       <td>Kanpur</td>
+                                       <td>+91 9867356123</td>
+                                    </tr>
+                                    <tr>
+                                       <td>Rachit Kumar</td>
+                                       <td>Installation</td>
+                                       <td>28/03/2020</td>
+                                       <td>Pune</td>
+                                       <td>+91 986372864</td>
+                                    </tr>
+                                    <tr>
+                                       <td>Vivek Garg</td>
+                                       <td>Servicing</td>
+                                       <td>29/03/2020</td>
+                                       <td>Bhubaneshwar</td>
+                                       <td>+91 8936473823</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+            </div>
+            <!-- Footer -->
+            <%- include('../partials/Footer') %>
+      </body>
+</html>
+
+<script>
+    var status = "hide" ;
+    $("#child-information").hide(true)
+    $("#addChild").click(function(){
+      if(status === "hide"){
+        $("#child-information").show(true)
+        status = "show"
+      }else{
+        $("#child-information").hide(true)
+        status = "hide"
+      }
+    })
+    $("#cancelChild").click(function(){
+       $("#child-information").hide(true)
+       status = "hide"
+    })
+  </script>

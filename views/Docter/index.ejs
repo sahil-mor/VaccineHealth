@@ -10,7 +10,7 @@
                                  <div class="iq-progress-bar progress-bar-vertical iq-bg-primary">
                                        <span class="bg-primary" data-percent="70"></span>
                                    </div>
-                                 <span class="line-height-4"> <%- docter.completedVaccinations.length -  docter.patients.length %> </span>
+                                 <span class="line-height-4"> <%- docter.patients.length - docter.completedVaccinations.length %> </span>
                                  <h4 class="mb-2 mt-2">Enrolled Children</h4>
                                  <p class="mb-0 text-secondary line-height">*******</p>
                               </div>
@@ -28,7 +28,7 @@
                                        <span class="bg-danger" data-percent="<%=p2%>"></span>
                                    </div>
                                  <span class="line-height-4"> <%= docter.patients.length %> </span>
-                                 <h4 class="mb-2 mt-2">Total Vaccines Given</h4>
+                                 <h4 class="mb-2 mt-2">Vaccines Going On</h4>
                                  <p class="mb-0 text-secondary line-height">*******</p>
                               </div>
                            </div>
@@ -45,7 +45,7 @@
                                    <span class="bg-warning" data-percent="<%=p3%>"></span>
                                    </div>
                                  <span class="line-height-4"> <%= docter.completedVaccinations.length %> </span>
-                                 <h4 class="mb-2 mt-2">Total Vaccines Completed</h4>
+                                 <h4 class="mb-2 mt-2"> Vaccines Completed</h4>
                                  <p class="mb-0 text-secondary line-height">*******</p>
                               </div>
                            </div>
@@ -68,7 +68,7 @@
                               <hr>
                               <ul class="doctoe-sedual d-flex align-items-center justify-content-between p-0">
                                  <li class="text-center">
-                                    <h3 class="counter"> <%= docter.patientsOnTreatment %> </h3>
+                                    <h3> <%- docter.patients.length - docter.completedVaccinations.length %> </h3>
                                     <span> Children on vaccination </span>
                                   </li>
                                   <li class="text-center">
@@ -110,7 +110,7 @@
                   </div>              
                </div>
                <div class="row">
-                  <div class="col-lg-8">
+                  <div class="col-lg-12">
                      <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">
@@ -133,196 +133,32 @@
                         </div>
                         <div class="iq-card-body">
                            <div class="table-responsive">
-                              <table class="table mb-0 table-borderless">
-                                 <thead>
-                                    <tr>
-                                       <th scope="col">Customer</th>
-                                       <th scope="col">Service</th>
-                                       <th scope="col">Date</th>
-                                       <th scope="col">Place</th>
-                                       <th scope="col">Contact</th>
-
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    <tr>
-                                       <td>Sneh Garg</td>
-                                       <td>Installation</td>
-                                       <td>22/03/2020</td>
-                                       <td>Chandigarh</td>
-                                       <td>+91 7863986377</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Annaya Sethi</td>
-                                       <td>Installation</td>
-                                       <td>25/03/2020</td>
-                                       <td>Delhi</td>
-                                       <td>+91 8652890123</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Ram Singh</td>
-                                       <td>Servicing</td>
-                                       <td>25/03/2020</td>
-                                       <td>Delhi</td>
-                                       <td>+91 8634517845</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Mukul Sharma</td>
-                                       <td>Check-Up</td>
-                                       <td>27/03/2020</td>
-                                       <td>Rishikesh</td>
-                                       <td>+91 6763748243</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Karan Yadav</td>
-                                       <td>Installation</td>
-                                       <td>28/03/2020</td>
-                                       <td>Kanpur</td>
-                                       <td>+91 9867356123</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Rachit Kumar</td>
-                                       <td>Installation</td>
-                                       <td>28/03/2020</td>
-                                       <td>Pune</td>
-                                       <td>+91 986372864</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Vivek Garg</td>
-                                       <td>Servicing</td>
-                                       <td>29/03/2020</td>
-                                       <td>Bhubaneshwar</td>
-                                       <td>+91 8936473823</td>
-                                    </tr>
-                                 </tbody>
-                              </table>
+                              <% docter.patients.forEach( eachChild => { %>
+                                 <div class="col-sm-6 col-md-3">
+                                    <div class="iq-card">
+                                       <div class="iq-card-body text-center">
+                                          <div class="doc-profile">
+                                             <img class="rounded-circle img-fluid avatar-80" src="<%=eachChild.image%>" alt="profile">
+                                          </div>
+                                          <div class="iq-doc-info mt-3">
+                                             <h4>  <%= eachChild.fname %> <%= eachChild.lname %>  </h4>
+                                             <ul style="margin-top: 10px;" class="doctoe-sedual d-flex align-items-center justify-content-between p-0">
+                                                <li class="text-center">
+                                                    <h5> <%= eachChild.age %> </h5>
+                                                    <span> Age </span>
+                                                </li>
+                                                <li class="text-center">
+                                                   <h5> <%= eachChild.nextDate %> </h5>
+                                                   <span> Appointment </span>
+                                                 </li>
+                                            </ul>
+                                          </div>
+                                          <a href="viewChild-<%=eachChild._id%>" class="btn btn-primary">View Profile</a>
+                                       </div>
+                                    </div>
+                                 </div>
+                              <% } ) %>
                            </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-lg-4">
-                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-header d-flex justify-content-between">
-                           <div class="iq-header-title">
-                              <h4 class="card-title">Vaccinations Completed This Year </h4>
-                           </div>
-                        </div>
-                        <div class="iq-card-body">
-                           <ul class="doctors-lists m-0 p-0">
-                              <li class="d-flex mb-4 align-items-center">
-                                 <div class="user-img img-fluid"><img src="images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                 <div class="media-support-info ml-3">
-                                    <h6>Raman Bhalla</h6>
-                                    <p class="mb-0 font-size-12">Engineer</p>
-                                 </div>
-                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <div class="dropdown show">
-                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton41" data-toggle="dropdown" aria-expanded="true" role="button">
-                                          <i class="ri-more-2-line"></i>
-                                       </span>
-                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#"><i class="ri-eye-line mr-2"></i>View</a>
-                                          <a class="dropdown-item" href="#"><i class="ri-bookmark-line mr-2"></i>Appointment</a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </li> 
-                              <li class="d-flex mb-4 align-items-center">
-                                 <div class="user-img img-fluid"><img src="images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                 <div class="media-support-info ml-3">
-                                    <h6>Madhu Sharma </h6>
-                                    <p class="mb-0 font-size-12">Engineer</p>
-                                 </div>
-                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <div class="dropdown show">
-                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton42" data-toggle="dropdown" aria-expanded="true" role="button">
-                                          <i class="ri-more-2-line"></i>
-                                       </span>
-                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#"><i class="ri-eye-line mr-2"></i>View</a>
-                                          <a class="dropdown-item" href="#"><i class="ri-bookmark-line mr-2"></i>Appointment</a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </li>
-  
-                  
-                              <li class="d-flex mb-4 align-items-center">
-                                 <div class="user-img img-fluid"><img src="images/user/05.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                 <div class="media-support-info ml-3">
-                                    <h6>Rajeev Mittal</h6>
-                                    <p class="mb-0 font-size-12">Surveyor</p>
-                                 </div>
-                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <div class="dropdown show">
-                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton45" data-toggle="dropdown" aria-expanded="true" role="button">
-                                          <i class="ri-more-2-line"></i>
-                                       </span>
-                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#"><i class="ri-eye-line mr-2"></i>View</a>
-                                          <a class="dropdown-item" href="#"><i class="ri-bookmark-line mr-2"></i>Appointment</a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="d-flex mb-4 align-items-center">
-                                 <div class="user-img img-fluid"><img src="images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                 <div class="media-support-info ml-3">
-                                    <h6>Priyanka Sharma</h6>
-                                    <p class="mb-0 font-size-12">Engineer</p>
-                                 </div>
-                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <div class="dropdown show">
-                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton46" data-toggle="dropdown" aria-expanded="true" role="button">
-                                          <i class="ri-more-2-line"></i>
-                                       </span>
-                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#"><i class="ri-eye-line mr-2"></i>View</a>
-                                          <a class="dropdown-item" href="#"><i class="ri-bookmark-line mr-2"></i>Appointment</a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="d-flex mb-4 align-items-center">
-                                 <div class="user-img img-fluid"><img src="images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                 <div class="media-support-info ml-3">
-                                    <h6>Anuradha Garg</h6>
-                                    <p class="mb-0 font-size-12">Engineer</p>
-                                 </div>
-                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <div class="dropdown show">
-                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton47" data-toggle="dropdown" aria-expanded="true" role="button">
-                                          <i class="ri-more-2-line"></i>
-                                       </span>
-                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#"><i class="ri-eye-line mr-2"></i>View</a>
-                                          <a class="dropdown-item" href="#"><i class="ri-bookmark-line mr-2"></i>Appointment</a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </li>
-                   
-                              <li class="d-flex mb-4 align-items-center">
-                                 <div class="user-img img-fluid"><img src="images/user/05.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                 <div class="media-support-info ml-3">
-                                    <h6>Anup Gaur</h6>
-                                    <p class="mb-0 font-size-12">Serveyor</p>
-                                 </div>
-                                 <div class="iq-card-header-toolbar d-flex align-items-center">
-                                    <div class="dropdown show">
-                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton49" data-toggle="dropdown" aria-expanded="true" role="button">
-                                          <i class="ri-more-2-line"></i>
-                                       </span>
-                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#"><i class="ri-eye-line mr-2"></i>View</a>
-                                          <a class="dropdown-item" href="#"><i class="ri-bookmark-line mr-2"></i>Appointment</a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </li>
-                                           
-                           </ul>
-                           <a href="javascript:void();" class="btn btn-primary d-block mt-3"><i class="ri-add-line"></i> View All Staff </a>
                         </div>
                      </div>
                   </div>

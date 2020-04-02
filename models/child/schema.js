@@ -1,8 +1,8 @@
 var mongoose = require("mongoose")
 
 var childSchema = new mongoose.Schema({
-    name : String,
-    mobileNumber : String,
+    fname : String,
+    lname : String,
     image : String,
     dob : String,
     age : String,
@@ -19,7 +19,8 @@ var childSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Vaccine"
     },
-    joined : Date,
+    nextDate : String,
+    vaccineNumberWorkingOn : Number
 })
 
 module.exports = childSchema
