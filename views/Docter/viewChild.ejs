@@ -48,7 +48,9 @@
                                  <h6 class="float-left mb-1"> <%= eachVaccine.vaccineName %> </h6>
                                  <% if(eachVaccine.schedule.includes("Done")){ %>
                                     <small class="float-right mt-1 btn-success btn"> <%= eachVaccine.schedule %>  </small>
-                                 <% }else{ %>
+                                 <% }else if(!eachVaccine.schedule.includes("Not")){ %>
+                                    <small class="float-right mt-1 btn-primary btn"> <%= eachVaccine.schedule %>  </small>
+                                 <% } else{ %>
                                     <small class="float-right mt-1 btn-danger btn"> <%= eachVaccine.schedule %>  </small>
                                  <% } %>
                                  <div class="d-inline-block w-100">

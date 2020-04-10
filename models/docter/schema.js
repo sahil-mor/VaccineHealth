@@ -46,6 +46,11 @@ var docterSchema = new mongoose.Schema({
         position : String,
         hospital : String,
         feedback : String
+    }],
+    notifications : [{
+        what : String,
+        when : String,
+        image : String
     }]
 })
 

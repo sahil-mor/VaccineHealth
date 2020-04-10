@@ -5,7 +5,7 @@
          <div class="container-fluid">
             <div class="row"  style="margin-top: -100px;">
                <div class="col-lg-4 row m-0 p-0">
-                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height iq-user-profile-block" style="height: 75%;">
+                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height iq-user-profile-block" style="height: 80%;">
                      <div class="iq-card-body">
                         <div class="user-details-block">
                            <div class="user-profile text-center">
@@ -24,8 +24,8 @@
                                        <div class="profile-img-edit">
                                           <input style="margin-top : 20px" id="cover" name="image" type="file" accept="image/*" required/>
                                           <div style="margin-top: 10px;">
-                                             <button type="submit" style="float: left;" class="btn btn-primary mr-2">Submit</button>
-                                             <button type="reset" id="cancelForm" class="btn iq-bg-danger">Cancel</button>
+                                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                             <button type="reset" style="margin-top: 10px;" id="cancelForm" class="btn iq-bg-danger">Cancel</button>
                                           </div>
                                        </div>
                                     </div>
@@ -85,9 +85,12 @@
                               </div>
                               <div class="text-center mt-3">
                                  <h4><b> 
+                                    <% var name = "" %>
                                     <% if(child.docter.fname != ""){ %>
+                                       <% name = child.docter.fname +" "+ child.docter.lname %>
                                        <%= child.docter.fname %> <%= child.docter.lname %>
                                     <% }else{ %>
+                                       <% name = child.docter.username %>
                                        <%= child.docter.username %> 
                                     <% } %>
                                  </b></h4> <br>
@@ -95,7 +98,7 @@
                                  <p> Specialization : <%= child.docter.specialization %> </p>
                                  <p> Mobile : <%= child.docter.mobileNumber %> </p>
                                  <p> City : <%= child.docter.city %>  </p>
-                                 <p> <a href="viewDocter-<%=child.docter._id%>-By-<%=child._id%>" class="btn btn-dark">View Docter</a> </p>
+                                 <p> <a href="viewDocter-<%=child.docter._id%>-By-<%=child._id%>" class="btn btn-dark">View <%= name %> </a> </p>
                               </div>
                            </div>
                         <% }else{ %>

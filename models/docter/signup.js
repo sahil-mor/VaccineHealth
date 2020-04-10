@@ -33,7 +33,7 @@ signup = (req, res) => {
                                     specialization : "",address : "",country : "",pinCode : "",
                                     alternateContact : "",joined : Date.now(),FacebookUrl: "",TwitterUrl: "",
                                     InstagramUrl: "", LinkedinUrl: "",completedVaccinations : [],appointmentFee : "INR 0",
-                                    age : "", pictures : [], education : [], experience : []
+                                    age : "", pictures : [], education : [], experience : [],notifications : []
                                 }, req.body.password, (err ,newUser ) => {
                                     if(err){
                                         console.log(err)

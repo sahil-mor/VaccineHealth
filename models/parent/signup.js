@@ -30,8 +30,8 @@ signup = (req, res) => {
                             }else{
                                 Parent.register({ username : req.body.username, mobileNumber : req.body.mobileNumber,
                                     image : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png",
-                                    address : "",country : "",pinCode : "",city : "",state : "",
-                                    joined : Date.now(),children : [],age : ""
+                                    address : "",country : "",pinCode : "",city : "",state : "",fname : "",lname : "",
+                                    joined : Date.now(),children : [],age : "",notifications : []
                                 }, req.body.password, (err ,newUser ) => {
                                     if(err){
                                         console.log(err)

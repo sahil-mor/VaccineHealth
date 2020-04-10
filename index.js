@@ -23,26 +23,13 @@ var docterSchema = require("./models/docter/schema")
 var Docter = mongoose.model("Docter",docterSchema)
 var parentSchema = require("./models/parent/schema")
 var Parent = mongoose.model("Parent",parentSchema)
-var childSchema = require("./models/child/schema")
-var Child = mongoose.model("Child",childSchema)
 
 //parent routes
-var signupParent = require("./models/parent/signup")
-var addChild = require("./models/parent/addChild")
-
+var parentRoutes = require("./routes/parent")
 //child routes
-var childInfoParent = require("./models/child/childInfo")
-var addImageChild = require("./models/child/addImageChild")
-var viewDocters = require("./models/child/viewDocters")
-var viewDocter = require("./models/child/viewDocter")
-var makePayment = require("./models/child/makePayment")
-var appointDocter = require("./models/child/appointDocter")
-
+var childRoutes = require("./routes/child")
 //appoinment routes
-var scheduleVaccine = require("./models/appointments/scheduleVaccine")
-var appointmentAttended = require("./models/appointments/attended")
-var appointmentMissed = require("./models/appointments/missed")
-
+var appoinmentRoutes = require("./routes/appointment")
 //docter routes
 var docterRoutes = require("./routes/docter")
 
@@ -70,8 +57,7 @@ app.use(passport.session())
 
 passport.use("docter" ,new LocalStratergy(Docter.authenticate()))
 passport.use("parent" ,new LocalStratergy(Parent.authenticate()))
-// passport.serializeUser(Docter.serializeUser())
-// passport.deserializeUser(Docter.deserializeUser())
+
 passport.serializeUser(function(user, done) { 
     done(null, user);
   });
@@ -86,49 +72,9 @@ app.get("/",function(req,res){
 })
 
 app.use(docterRoutes)
-
-//parent routes
-app.get("/signupParent",(req,res)=>{
-    res.render("Parent/signup",{ page : "Signup"  })
-})
-
-app.get("/signinParent",(req,res)=>{
-    res.render("Parent/signin",{ page : "Signin"  })
-})
-
-app.post("/signupParent",signupParent)
-app.post("/signinParent",passport.authenticate("parent",{
-    failureRedirect : "/wrongCredentials-Parent",
-    }),isParentLoggedIn, (req,res) => {
-        req.flash("success","Welcome " + req.user.username)
-        res.redirect("indexParent")
-    }
-)
-
-app.get("/indexParent",isParentLoggedIn,(req,res)=>{
-    Parent.findById(req.user._id).populate("children").exec( (err,foundParent) => {
-        if(err){
-            console.log(err)
-            req.flash("UNEXPECTED ERROR OCCURED!!!")
-            res.redirect("signinParent")
-        }else{
-            res.render("Parent/index",{ parent : foundParent})
-        }
-    } )
-})
-
-app.put("/addChild",isParentLoggedIn,addChild)
-app.get("/childInfo-:id",isParentLoggedIn,childInfoParent)
-app.put("/addImage-:id",isParentLoggedIn,addImageChild)
-app.get("/viewDoctersBy-:childId",isParentLoggedIn,viewDocters)
-app.get("/viewDocter-:docterId-By-:childId",isParentLoggedIn,viewDocter)
-app.get("/makePaymentTo-:docterId-For-:childId",isParentLoggedIn,makePayment)
-app.post("/makePaymentTo-:docterId-For-:childId",isParentLoggedIn,appointDocter)
-
-//vaccination routes
-app.put("/scheduleVaccine-:childId",isDocterLoggedIn,scheduleVaccine)
-app.get("/appointmentAttended-:childId",isDocterLoggedIn,appointmentAttended)
-app.get("/appointmentMissed-:childId",isDocterLoggedIn,appointmentMissed)
+app.use(parentRoutes)
+app.use(childRoutes)
+app.use(appoinmentRoutes)
 
 app.get("/contact",( req, res ) => {
     res.render("contact")
@@ -149,25 +95,6 @@ app.get("/logout-:role",(req,res)=>{
     res.redirect("signin" + req.params.role)
 })
 
-
-function isDocterLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next()
-    }else{
-        req.flash("error", "YOU MUST LOG IN FIRST!!!" )
-        res.redirect("/signinDocter")
-    }
-}
-
-function isParentLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next()
-    }else{
-        req.flash("error", "YOU MUST LOG IN FIRST!!!" )
-        res.redirect("/signinParent")
-    }
-}
-
-app.listen(3000,function(){
-    console.log("SERVER AT 3000")
+app.listen(5000,function(){
+    console.log("SERVER AT 5000")
 })

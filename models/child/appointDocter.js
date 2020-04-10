@@ -41,6 +41,14 @@ makePayment = (req,res) => {
                                         }
                                         list.push(foundChild)
                                         foundDocter.patients = list
+                                        var newNotification = {
+                                            what : foundChild.fname + "  " + foundChild.lname + " has appointed you." , 
+                                            when : Date.now(),image : foundChild.image
+                                        }
+                                        if(foundDocter.notifications.length == 5 ){
+                                            foundDocter.notifications = foundDocter.notifications.slice(0,3)
+                                        }
+                                        foundDocter.notifications.unshift(newNotification)
                                         foundDocter.save( (err,savedDocter) => {
                                             if(err){
                                                 console.log(err)
