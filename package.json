@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "nodemon app.js"
+    "start": "node index.js",
+    "test": "nodemon index.js"
   },
   "author": "Sahil Mor",
   "license": "ISC",

@@ -16,7 +16,10 @@ nexmo = new Nexmo({
 
 var app = express();
 
-mongoose.connect("mongodb://localhost:27017/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
+// mongoose.connect("mongodb://localhost:27017/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
+
+mongoose.connect("mongodb+srv://shadow:sahilmor@cluster0-fhn8u.mongodb.net/test?retryWrites=true&w=majority",
+ { useUnifiedTopology: true,useNewUrlParser : true })
 
 //models
 var docterSchema = require("./models/docter/schema")
@@ -95,6 +98,6 @@ app.get("/logout-:role",(req,res)=>{
     res.redirect("signin" + req.params.role)
 })
 
-app.listen(5000,function(){
+app.listen(process.env.PORT || 5000,function(){
     console.log("SERVER AT 5000")
 })
