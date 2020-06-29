@@ -94,6 +94,10 @@ app.get("/logout-:role",(req,res)=>{
     res.redirect("signin" + req.params.role)
 })
 
+app.get("/*",(req,res) => {
+    res.render("404error")
+})
+
 app.listen(process.env.PORT || 5000,function(){
     console.log("SERVER AT 5000")
 })
