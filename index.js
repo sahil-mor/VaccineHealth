@@ -14,9 +14,6 @@ var app = express();
 
 mongoose.connect("mongodb://localhost:27017/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
 
-// mongoose.connect("mongodb+srv://shadow:sahilmor@cluster0-fhn8u.mongodb.net/test?retryWrites=true&w=majority",
-//  { useUnifiedTopology: true,useNewUrlParser : true })
-
 //models
 var docterSchema = require("./models/docter/schema")
 var Docter = mongoose.model("Docter",docterSchema)
