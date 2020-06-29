@@ -2,12 +2,10 @@ var mongoose = require("mongoose")
 var passport = require("passport")
 var schema = require("./schema")
 var Docter = mongoose.model("Docter",schema)
-
+var nodemailer = require("nodemailer")
+var otpSchema = require("../otp/otpSchema")
+var OTP = mongoose.model("OTP",otpSchema)
 signup = (req, res) => {
-    if(req.body.mobileNumber.length != 10){
-        req.flash("error","Mobile Number Entered Is Wrong!!!")
-        res.redirect("/signupDocter")
-    }else{
         Docter.findOne({ username : req.body.username }, (err, sameName ) => {
             if(err){
                 console.log(err)
@@ -18,39 +16,68 @@ signup = (req, res) => {
                     req.flash("error","Username already taken!!!")
                     res.redirect("/signupDocter")
                 }else{
-                    Docter.findOne({ mobileNumber : req.body.mobileNumber }, (err, sameNumber ) => {
+                    Docter.findOne({ email : req.body.email }, (err, sameEmail ) => {
                         if(err){
                             console.log(err)
                             req.flash("error","Unexpected Error Occurs!!!")
                             res.redirect("/signupDocter")
                         }else{
-                            if(sameNumber){
-                                req.flash("error","Mobile Number already taken!!!")
+                            if(sameEmail){
+                                req.flash("error","Email Already In Use!!!")
                                 res.redirect("/signupDocter")
                             }else{
-                                Docter.register({ username : req.body.username, mobileNumber : req.body.mobileNumber,
-                                    patients : [], image : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png",
-                                    specialization : "",address : "",country : "",pinCode : "",
-                                    alternateContact : "",joined : Date.now(),FacebookUrl: "",TwitterUrl: "",
-                                    InstagramUrl: "", LinkedinUrl: "",completedVaccinations : [],appointmentFee : "INR 0",
-                                    age : "", pictures : [], education : [], experience : [],notifications : []
-                                }, req.body.password, (err ,newUser ) => {
-                                    if(err){
-                                        console.log(err)
-                                        req.flash("error","Unexpected Error Occurs!!!")
-                                        res.redirect("/signupDocter")
-                                    }else{
-                                        passport.authenticate("docter")
-                                        res.redirect("/indexDocter")
+                                const smtpTrans = nodemailer.createTransport({
+                                    host: 'smtp.gmail.com',
+                                    port: 465,
+                                    secure: true,
+                                    auth: {
+                                        user: 'email@gmail',
+                                        pass: '********'
                                     }
-                                } )
+                                })
+                                otp = Math.floor(Math.random() * 1000000)
+                                const mailOpts = {
+                                    from: "email@gmail",
+                                    to: req.body.email,
+                                    subject: 'Verify Email Address',
+                                    text: "Hi," + "\n\n" + 
+                                    "To proceed further with your account verification at Medino , Please use the 6-digit OTP given below.This OTP is only valid for 60 minutes"
+                                    + "\n\n" + 
+                                    otp + "\n\n" + 
+                                    "Regards," +
+                                    "Team ,Medino"
+                                }
+                                smtpTrans.sendMail(mailOpts, (error, response) => {
+                                    if (error) {
+                                        console.log(error)
+                                        req.flash("error","Cannot Verify Your Email Right Now !!!")
+                                        res.redirect("/signupDocter") // Show a page indicating failure
+                                    }
+                                    else {
+                                        var now = new Date();
+                                        OTP.create({
+                                            timeOfSending : now,
+                                            otp : otp,
+                                            email : req.body.email,
+                                            username : req.body.username,
+                                            password : req.body.password
+                                        } , (err,createOtp) => {
+                                            if(err){
+                                                console.log(error)
+                                                req.flash("error","Cannot Verify Your Email Right Now !!!")
+                                                res.redirect("/signupDocter") 
+                                            }else{
+                                                res.redirect("/otpDocter-" + req.body.email + "-" + createOtp.id )
+                                            }
+                                        } )
+                                    }
+                                })
                             }
                         }
                     } )
                 }
             }
         } )
-    }
 }
 
 module.exports = signup

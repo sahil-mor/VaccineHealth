@@ -2,12 +2,12 @@ var mongoose = require("mongoose")
 var passport = require("passport")
 var schema = require("./schema")
 var Parent = mongoose.model("Parent",schema)
+var nodemailer = require("nodemailer")
+
+var otpSchema = require("../otp/otpSchema")
+var OTP = mongoose.model("OTP",otpSchema)
 
 signup = (req, res) => {
-    if(req.body.mobileNumber.length != 10){
-        req.flash("error","Mobile Number Entered Is Wrong!!!")
-        res.redirect("/signupParent")
-    }else{
         Parent.findOne({ username : req.body.username }, (err, sameName ) => {
             if(err){
                 console.log(err)
@@ -18,37 +18,68 @@ signup = (req, res) => {
                     req.flash("error","Username already taken!!!")
                     res.redirect("/signupParent")
                 }else{
-                    Parent.findOne({ mobileNumber : req.body.mobileNumber }, (err, sameNumber ) => {
+                    Parent.findOne({ email : req.body.email }, (err, sameEmail ) => {
                         if(err){
                             console.log(err)
                             req.flash("error","Unexpected Error Occurs!!!")
                             res.redirect("/signupParent")
                         }else{
-                            if(sameNumber){
-                                req.flash("error","Mobile Number already taken!!!")
+                            if(sameEmail){
+                                req.flash("error","Email Address Already In Use!!!")
                                 res.redirect("/signupParent")
                             }else{
-                                Parent.register({ username : req.body.username, mobileNumber : req.body.mobileNumber,
-                                    image : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png",
-                                    address : "",country : "",pinCode : "",city : "",state : "",fname : "",lname : "",
-                                    joined : Date.now(),children : [],age : "",notifications : []
-                                }, req.body.password, (err ,newUser ) => {
-                                    if(err){
-                                        console.log(err)
-                                        req.flash("error","Unexpected Error Occurs!!!")
-                                        res.redirect("/signupParent")
-                                    }else{
-                                        passport.authenticate("Parent")
-                                        res.redirect("/indexParent")
+                                const smtpTrans = nodemailer.createTransport({
+                                    host: 'smtp.gmail.com',
+                                    port: 465,
+                                    secure: true,
+                                    auth: {
+                                        user: 'ryzit1@gmail.com',
+                                        pass: 'etrikieegnaqqngu'
                                     }
-                                } )
+                                })
+                                otp = Math.floor(Math.random() * 1000000)
+                                const mailOpts = {
+                                    from: "ryzit1@gmail.com",
+                                    to: req.body.email,
+                                    subject: 'Verify Email Address',
+                                    text: "Hi," + "\n\n" + 
+                                    "To proceed further with your account verification at Medino , Please use the 6-digit OTP given below.This OTP is only valid for 60 minutes"
+                                    + "\n\n" + 
+                                    otp + "\n\n" + 
+                                    "Regards," +
+                                    "Team ,Medino"
+                                }
+                                smtpTrans.sendMail(mailOpts, (error, response) => {
+                                    if (error) {
+                                        console.log(error)
+                                        req.flash("error","Cannot Verify Your Email Right Now !!!")
+                                        res.redirect("/signupParent") // Show a page indicating failure
+                                    }
+                                    else {
+                                        var now = new Date();
+                                        OTP.create({
+                                            timeOfSending : now,
+                                            otp : otp,
+                                            email : req.body.email,
+                                            username : req.body.username,
+                                            password : req.body.password
+                                        } , (err,createOtp) => {
+                                            if(err){
+                                                console.log(error)
+                                                req.flash("error","Cannot Verify Your Email Right Now !!!")
+                                                res.redirect("/signupParent") 
+                                            }else{
+                                                res.redirect("/otp-" + req.body.email + "-" + createOtp.id )
+                                            }
+                                        } )
+                                    }
+                                })
                             }
                         }
                     } )
                 }
             }
         } )
-    }
 }
 
 module.exports = signup

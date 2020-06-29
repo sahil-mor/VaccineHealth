@@ -1,19 +1,13 @@
 <%- include('../partials/sign/header') %>
             <div class="col-md-6 position-relative">
                 <div class="sign-in-from">
-                    <h1 class="mb-0">Parent Sign Up</h1>
-                    <form class="mt-4" method="POST" action="/signupParent">
+                    <h2 class="mb-0">Email Address Verification</h2>
+                    <h4>An OTP has been sent to your email ending with 
+                        ********<%=email.slice(email.length-14,email.length)%></h4>
+                    <form class="mt-4" method="POST" action="/verifyEmailParent-<%=otpId%> ">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Your Full Name</label>
-                            <input type="text" name="username" class="form-control mb-0" id="exampleInputEmail1" placeholder="Your Full Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail2">Email Address</label>
-                            <input type="email" name="email"  class="form-control mb-0" id="exampleInputEmail2" placeholder="Enter Email Address">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="password" minlength="7" class="form-control mb-0" id="exampleInputPassword1" placeholder="Password">
+                            <label for="exampleInputEmail1">Enter OTP</label>
+                            <input type="number" name="enteredOtp" class="form-control mb-0" id="exampleInputEmail1" placeholder="One Time Password">
                         </div>
                         <% if(error != undefined && error.length > 0){ %>
                             <div class="alert alert-danger text-center">
@@ -27,12 +21,9 @@
                             </div>
                         <% } %>
                         <div class="d-inline-block w-100">
-                            <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-                                <input type="checkbox" required class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">I accept <a href="terms-of-service" target="_blank">Terms and Conditions</a></label>
-                            </div>
                             <button class="btn btn-primary float-right" type="submit">Sign Up</button>
                         </div>
+                        
                         <div class="sign-info">
                             <span class="dark-color d-inline-block line-height-2">Already Have Account ? 
                                 <a href="/signinParent">Log In</a>

@@ -13,6 +13,17 @@
                             <a href="pages-recoverpw.html" class="float-right">Forgot password?</a>
                             <input type="password" name="password" class="form-control mb-0" id="exampleInputPassword1" placeholder="Password">
                         </div>
+                        <% if(error != undefined && error.length > 0){ %>
+                            <div class="alert alert-danger text-center">
+                                <%= error %>
+                            </div>
+                        <% } %>
+                        
+                        <% if(success != undefined && success.length > 0){ %>
+                            <div class="alert alert-success">
+                                <%= success %>
+                            </div>
+                        <% } %>
                         <div class="d-inline-block w-100">
                             <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
                                 <input type="checkbox" class="custom-control-input" id="customCheck1">

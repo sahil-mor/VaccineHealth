@@ -1,7 +1,7 @@
 var express = require("express")
 var bodyParser = require("body-parser")
 var mongoose = require("mongoose")
-var Nexmo = require("nexmo")
+
 var passport = require("passport")
 var LocalStratergy = require("passport-local")
 var passportLocalMongoose = require("passport-local-mongoose")
@@ -9,17 +9,13 @@ var methodOverride = require("method-override")
 var request = require("request")
 var flash =  require("connect-flash")
 var session = require('express-session');
-nexmo = new Nexmo({
-    apiKey : '8d8ab9de',
-    apiSecret : 'zUtK2Ca2O0U0TvN0'
-},{debug : true});
 
 var app = express();
 
-// mongoose.connect("mongodb://localhost:27017/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
+mongoose.connect("mongodb://localhost:27017/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
 
-mongoose.connect("mongodb+srv://shadow:sahilmor@cluster0-fhn8u.mongodb.net/test?retryWrites=true&w=majority",
- { useUnifiedTopology: true,useNewUrlParser : true })
+// mongoose.connect("mongodb+srv://shadow:sahilmor@cluster0-fhn8u.mongodb.net/test?retryWrites=true&w=majority",
+//  { useUnifiedTopology: true,useNewUrlParser : true })
 
 //models
 var docterSchema = require("./models/docter/schema")
@@ -35,6 +31,8 @@ var childRoutes = require("./routes/child")
 var appoinmentRoutes = require("./routes/appointment")
 //docter routes
 var docterRoutes = require("./routes/docter")
+//otp routes
+var otpRoutes = require("./routes/otp")
 
 app.use(bodyParser.urlencoded({extended : true}))
 app.set("view engine","ejs")
@@ -78,6 +76,7 @@ app.use(docterRoutes)
 app.use(parentRoutes)
 app.use(childRoutes)
 app.use(appoinmentRoutes)
+app.use(otpRoutes)
 
 app.get("/contact",( req, res ) => {
     res.render("contact")
