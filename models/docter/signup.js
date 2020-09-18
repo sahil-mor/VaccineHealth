@@ -31,7 +31,8 @@ signup = (req, res) => {
                                     port: 465,
                                     secure: true,
                                     auth: {
-                                        
+                                        user: 'ryzit1@gmail.com',
+                                        pass: 'etrikieegnaqqngu'
                                     }
                                 })
                                 otp = Math.floor(Math.random() * 1000000)

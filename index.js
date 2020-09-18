@@ -11,7 +11,8 @@ var flash =  require("connect-flash")
 var session = require('express-session');
 
 var app = express();
-mongoose.connect("mongodb://localhost:27017/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
+// mongodb://localhost:27017/Vaccination
+mongoose.connect("mongodb+srv://SahilMor:Sahil@14@cluster0-fhn8u.mongodb.net/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
 
 //models
 var docterSchema = require("./models/docter/schema")
