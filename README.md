@@ -10,7 +10,7 @@ Parents can select docters for their children whose appointment data will be han
 
 <table>
   <tr>
-    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/Screenshots/1.png"  ></td>
+    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/Screenshots/1.png"  ></td>
   </tr>
   </table>
 
@@ -20,10 +20,10 @@ Parents can select docters for their children whose appointment data will be han
 
 <table>
   <tr>
-    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/Screenshots/2.png"  ></td>
+    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/Screenshots/2.png"  ></td>
   </tr>
   <tr>
-    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/Screenshots/3.png"  ></td>
+    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/Screenshots/3.png"  ></td>
   </tr>
   </table>
 
@@ -33,7 +33,7 @@ Parents can select docters for their children whose appointment data will be han
 
 <table>
   <tr>
-    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/Screenshots/4.png"  ></td>
+    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/Screenshots/4.png"  ></td>
   </tr>
   </table>
 
@@ -43,7 +43,7 @@ Parents can select docters for their children whose appointment data will be han
 
 <table>
   <tr>
-    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/Screenshots/5.png"  ></td>
+    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/Screenshots/5.png"  ></td>
   </tr>
   </table>
 
@@ -53,7 +53,7 @@ Parents can select docters for their children whose appointment data will be han
 
 <table>
   <tr>
-    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/Screenshots/9.png"  ></td>
+    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/Screenshots/9.png"  ></td>
   </tr>
   </table>
 
@@ -63,7 +63,7 @@ Parents can select docters for their children whose appointment data will be han
 
 <table>
   <tr>
-    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/Screenshots/10.png"  ></td>
+    <td align="center"><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/Screenshots/10.png"  ></td>
   </tr>
   </table>
 
