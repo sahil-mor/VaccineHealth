@@ -33,8 +33,7 @@ signup = (req, res) => {
                                     port: 465,
                                     secure: true,
                                     auth: {
-                                        user: 'ryzit1@gmail.com',
-                                        pass: 'etrikieegnaqqngu'
+                                       
                                     }
                                 })
                                 otp = Math.floor(Math.random() * 1000000)
@@ -43,11 +42,11 @@ signup = (req, res) => {
                                     to: req.body.email,
                                     subject: 'Verify Email Address',
                                     text: "Hi," + "\n\n" + 
-                                    "To proceed further with your account verification at Medino , Please use the 6-digit OTP given below.This OTP is only valid for 60 minutes"
+                                    "To proceed further with your account verification at VaccineHealth , Please use the 6-digit OTP given below.This OTP is only valid for 60 minutes"
                                     + "\n\n" + 
                                     otp + "\n\n" + 
                                     "Regards," +
-                                    "Team ,Medino"
+                                    "Team ,VaccineHealth"
                                 }
                                 smtpTrans.sendMail(mailOpts, (error, response) => {
                                     if (error) {
