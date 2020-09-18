@@ -82,9 +82,9 @@ Visit http://localhost:5000 <br />
 
 <table>
   <tr>
-    <td><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/public/assets/images/node.jpg" width="150px" height="150px" /></td>
-    <td><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/public/assets/images/mongoose.png" width="150px" height="150px" /></td>
-    <td><img src="https://github.com/sahil-mor/VaccineHealth/tree/master/public/assets/images/express.png" width="150px" height="150px" /></td>
+    <td><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/public/assets/images/node.jpg" width="150px" height="150px" /></td>
+    <td><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/public/assets/images/mongoose.png" width="150px" height="150px" /></td>
+    <td><img src="https://github.com/sahil-mor/VaccineHealth/blob/master/public/assets/images/express.png" width="150px" height="150px" /></td>
     <br />  </td>
   </tr>
   </table>
