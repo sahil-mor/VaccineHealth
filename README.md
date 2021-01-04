@@ -4,6 +4,16 @@ Parents can select docters for their children whose appointment data will be han
 
 <br />
 
+# Hosted
+<a href="https://vaccinehealth.herokuapp.com/" > Visit VaccineHealth </a>
+
+<br />
+
+# Video
+<a href="https://drive.google.com/file/d/1hob7gUhRVamFfikmuAww_9fg1y5I1e9o/view?usp=sharing"> Video </a>
+
+<br />
+
 # Screenshots
 
 ## Home
