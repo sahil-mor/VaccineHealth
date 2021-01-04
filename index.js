@@ -4,15 +4,17 @@ var mongoose = require("mongoose")
 
 var passport = require("passport")
 var LocalStratergy = require("passport-local")
-var passportLocalMongoose = require("passport-local-mongoose")
+
+var nodemailer = require("nodemailer")
 var methodOverride = require("method-override")
-var request = require("request")
+
 var flash =  require("connect-flash")
 var session = require('express-session');
+require("dotenv").config()
 
 var app = express();
-// mongodb://localhost:27017/Vaccination
-mongoose.connect("mongodb+srv://SahilMor:Sahil@14@cluster0-fhn8u.mongodb.net/Vaccination" ,  { useUnifiedTopology: true,useNewUrlParser : true })
+// 
+mongoose.connect(process.env.DB_URL_PRODUCTION ,  { useUnifiedTopology: true,useNewUrlParser : true })
 
 //models
 var docterSchema = require("./models/docter/schema")
@@ -30,6 +32,9 @@ var appoinmentRoutes = require("./routes/appointment")
 var docterRoutes = require("./routes/docter")
 //otp routes
 var otpRoutes = require("./routes/otp")
+//dummy credentials
+var schema = require("./models/dummy/schema")
+var MailedTo = mongoose.model("MailedTo",schema)
 
 app.use(bodyParser.urlencoded({extended : true}))
 app.set("view engine","ejs")
@@ -69,6 +74,48 @@ app.get("/",function(req,res){
     res.render("home")
 })
 
+
+app.get("/dummyCredential",(req,res) => {
+    res.render("dummyCredential",{ page : "Dummy Credential" })
+} )
+
+app.post("/dummyCredential",async (req,res) => {
+    try {
+        var {enteredName,enteredEmail} = req.body
+        var newUser = await MailedTo.create({ name : enteredName,  email : enteredEmail })
+        const smtpTrans = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL_ID,
+                pass: process.env.PASSWORD
+            }
+        })
+        const mailOpts = {
+            from: "VaccineHealth",
+            to: enteredEmail,
+            subject: 'Dummy Credentials for VaccineHealth',
+            text: "Hi," + enteredName + "\n\n" + 
+            "To proceed further with VaccineHealth , you can use following credentials."
+            + "\n\n" + 
+            "Parent Credentials : \nUsername - Dummy Parent\nPassword - dummypassword"
+            + "\n\n" + 
+            "Docter Credentials : \nUsername - Dummy Docter\nPassword - dummypassword"
+            + "\n\n" + 
+            "Regards,\n" +
+            "Team ,VaccineHealth"
+        }
+        var response = await smtpTrans.sendMail(mailOpts)
+        req.flash("success","Dummy Credentials has been sent to you! Please check your email")
+        res.redirect("signinDocter")
+    } catch (error) {
+        console.log(error)
+        req.flash("error","Cannot send you credentials right now")
+        res.redirect("signinDocter")
+    }
+} )
+
 app.use(docterRoutes)
 app.use(parentRoutes)
 app.use(childRoutes)
@@ -76,9 +123,6 @@ app.use(appoinmentRoutes)
 app.use(otpRoutes)
 
 
-app.get("/terms-of-service",(req,res) => {
-    res.render("terms-of-service")
-})
 
 app.get("/wrongCredentials-:role", (req, res) => {
     req.flash("error","WRONG USERNAME OR PASSWORD")
